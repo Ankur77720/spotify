@@ -15,8 +15,10 @@ const config: Config = {
       },
       colors: {
         "bg-primary": "#121212",
-        "bg-highlight": "##030303",
-        "text-primary": "#ffffff",
+        "bg-highlight": "#1cd760",
+        "bg-secondary": "#030303",
+        "text-primary": "#f3f3f3",
+        "text-secondary": "#101010",
         "text-highlight": '#1cd760',
         "ui-default": "#777777",
       }

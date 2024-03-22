@@ -8,6 +8,8 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -28,10 +30,13 @@ body {
   width: 100%;
 }
 
+html {
+  font-size: clamp(12px, 1.06vw, 19px);
+}
+
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
-

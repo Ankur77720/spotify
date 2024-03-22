@@ -1,11 +1,12 @@
-import React from 'react'
-import Input from '@/components/input'
-import './style.css'
+import Input from "@/components/input"
 
 const Login = () => {
     return (
-        <main className='authOverlay h-full w-full flex justify-center items-center'>
-            <div className="actions w-full h-full bg-gradient-to-t via-bg-primary via-50% from-bg-primary to-transparent"></div>
+        <main className="flex items-center justify-start p-8 pt-8 flex-col gap-8">
+            <h1 className="font-semibold text-xl" >Login account</h1>
+            <Input />
+            <Input />
+            <button className="bg-ui-default p-3 rounded-full px-10 text-xl mt-8" >next</button>
         </main>
     )
 }
