@@ -20,7 +20,7 @@ const config: Config = {
         "text-primary": "#f3f3f3",
         "text-secondary": "#101010",
         "text-highlight": '#1cd760',
-        "ui-default": "#777777",
+        "ui-default": "rgb(49, 49, 49)",
       }
     },
   },

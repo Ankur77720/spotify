@@ -1,24 +1,35 @@
-import React, { FC } from 'react'
+
+
+import React, { FC, Ref } from 'react'
+import './style.css'
 
 interface inputProps {
     label?: string,
     name?: string,
     type?: string,
-    bind?: Function
+    bind?: Function,
+    forwardedRef?: React.RefObject<HTMLDivElement>
 }
 
-const Input: FC<inputProps> = ({ label, name, type, bind }) => {
+const Input: FC<inputProps> = ({ label, name, type, bind, forwardedRef }) => {
+
+    function inputHandler(event: React.FormEvent<HTMLInputElement>) {
+        const value = event.currentTarget.value;
+        bind && bind(value)
+    }
+
     return (
-        <div className='w-full flex flex-col gap-2 text-xl'>
-            <label htmlFor="" className='font-semibold text-2xl'>
-                What's your username ?
+        <div ref={forwardedRef} className='input w-full flex flex-col gap-1  text-xl'>
+            <label htmlFor={name} className='font-semibold text-2xl'>
+                {label || `What's your username ?`}
             </label>
             <input
                 className='p-4 bg-ui-default  text-2xl rounded-md border-transparent w-full outline-none text-text-primary'
-                type="text"
-                name='username'
-                id='username'
-            />``
+                type={type || "text"}
+                name={name}
+                id={name}
+                onInput={inputHandler}
+            />
         </div>
     )
 }
