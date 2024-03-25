@@ -15,12 +15,14 @@ const config: Config = {
       },
       colors: {
         "bg-primary": "#121212",
+        "bg-primary-default": "#222222",
         "bg-highlight": "#1cd760",
         "bg-secondary": "#030303",
         "text-primary": "#f3f3f3",
         "text-secondary": "#101010",
         "text-highlight": '#1cd760',
         "ui-default": "rgb(49, 49, 49)",
+        "bg-trans": "#00000000",
       }
     },
   },
