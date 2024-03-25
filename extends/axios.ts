@@ -6,7 +6,6 @@ class CustomAxios {
     constructor() {
         this.instance = axios.create({
             baseURL: process.env.NEXT_PUBLIC_BACKEND, // Assuming this is your base URL
-            timeout: 5000, // Adjust timeout as per your requirement
         });
 
         // Add a request interceptor to automatically add JWT token to headers

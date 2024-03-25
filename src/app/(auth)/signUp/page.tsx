@@ -44,7 +44,7 @@ const SignUp = () => {
             const data = response.data
 
             if (data.token) {
-                window.localStorage.setItem('token', data.token)
+                typeof window !== 'undefined' && window.localStorage.setItem('token', data.token)
                 router.replace('/home')
             }
 

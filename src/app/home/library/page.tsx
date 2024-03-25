@@ -14,11 +14,12 @@ const Library = () => {
             const audioFiles = Array.from(fileInputRef.current.files).filter(file => file.type.startsWith('audio/'));
             if (audioFiles.length > 0) {
                 const formData = new FormData();
-                audioFiles.forEach(file => formData.append('audioFiles', file));
+                audioFiles.forEach(file => formData.append('file', file));
                 axios.post('/upload', formData)
                     .then(response => {
                         console.log(response.data)
                         console.log("Song uploaded successfully!");
+                        
                         router.push('/home');
                     })
                     .catch(error => {
