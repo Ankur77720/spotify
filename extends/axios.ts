@@ -38,6 +38,10 @@ class CustomAxios {
         return this.instance.get(url, config);
     }
 
+    public async put<T = any, R = AxiosResponse<T>>(url: string, data?: any, config?: AxiosRequestConfig): Promise<R> {
+        return this.instance.put(url, data, config);
+    }
+
     // Add other HTTP methods as needed
 }
 

@@ -3,11 +3,13 @@ import React, { use, useEffect, useRef, useState } from 'react'
 import * as RemixIcon from "@remixicon/react"
 import { useAppDispatch, useAppSelector } from '../redux/hook';
 import axios from '../../extends/axios';
+import { setCurrentTrack } from '../redux/reducers/music';
 
 const Player = () => {
 
 
     const dispatch = useAppDispatch();
+    const tracks = useAppSelector(state => state.music.value.tracks);
     const currentTrack = useAppSelector(state => state.music.value.currentTrack);
     const [isPlaying, setIsPlaying] = useState<boolean>(true);
     const [isLiked, setIsLiked] = useState<boolean>(false)
@@ -32,8 +34,30 @@ const Player = () => {
     };
     const [trackProgress, setTrackProgress] = useState<number>(0);
 
+    const handleLike = () => {
+        setIsLiked(!isLiked);
+        axios.post('/like', { trackId: currentTrack?._id });
+    };
+
+    const handleNext = () => {
+        if (!currentTrack) return;
+        const currentIndex = tracks.findIndex(track => track._id === currentTrack._id);
+        const nextIndex = (currentIndex + 1) % tracks.length;
+        dispatch(setCurrentTrack(tracks[nextIndex]));
+    };
+
+    const handlePrevious = () => {
+        if (!currentTrack) return;
+        const currentIndex = tracks.findIndex(track => track._id === currentTrack._id);
+        const previousIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+        dispatch(setCurrentTrack(tracks[previousIndex]));
+    };
+
     useEffect(() => {
         if (!currentTrack) return;
+
+
+
 
         async function checkLike() {
             const response = await axios.post('/checkLike', { trackId: currentTrack?._id });
@@ -47,8 +71,6 @@ const Player = () => {
         const progressBar = progressBarRef.current as HTMLElement;
         const thumb = thumbRef.current as HTMLElement;
 
-
-
         let lastTime = 0;
         let maxFPS = 60; // Change this value to set the maximum FPS
         function updateProgress(timestamp: number) {
@@ -60,7 +82,7 @@ const Player = () => {
                 lastTime = timestamp;
                 // Your code here
 
-                console.log(audioElement.duration)
+                audioElement.paused ? setIsPlaying(false) : setIsPlaying(true);
 
                 const progress: number = audioElement.duration ? (audioElement.currentTime / audioElement.duration) * 100 : 0;
                 progressBar.style.width = `${progress}%`;
@@ -78,18 +100,10 @@ const Player = () => {
             thumb.style.left = '0%';
         }
 
-
         progressBar.style.width = `${trackProgress}%`;
         thumb.style.left = `${trackProgress}%`;
 
     }, [currentTrack]);
-
-
-    const handleLike = () => {
-        setIsLiked(!isLiked);
-        axios.post('/like', { trackId: currentTrack?._id });
-    };
-
 
 
 
@@ -103,6 +117,8 @@ const Player = () => {
             <RemixIcon.RiPlayFill className="icon text-xl" size={40} />
         </div>
     );
+
+
     if (!currentTrack) return (<>    </>)
 
     return (
@@ -119,15 +135,24 @@ const Player = () => {
                             />
                         </div>
                         <div className="text">
-                            <h1 className="truncate max-w-60" >{currentTrack.title}</h1>
-                            <p className="opacity-60 truncate max-w-60" >{currentTrack.artists.map(artist => artist.name).join('/')}</p>
+                            <h1 className="truncate max-w-44" >{currentTrack.title}</h1>
+                            <p className="opacity-60 truncate max-w-44" >{currentTrack.artists.map(artist => artist.name).join('/')}</p>
                         </div>
                     </div>
                     <div className="controls h-full flex items-center gap-3">
+
+
+
                         <div className="like" onClick={handleLike}>
                             {isLiked ? <RemixIcon.RiHeartFill className="icon" size={30} /> : <RemixIcon.RiHeartLine className="icon" size={30} />}
                         </div>
+                        <div className="previous" onClick={handlePrevious}>
+                            <RemixIcon.RiSkipBackFill className="icon text-xl" size={30} />
+                        </div>
                         {playPauseButton}
+                        <div className="next" onClick={handleNext}>
+                            <RemixIcon.RiSkipForwardFill className="icon text-xl" size={30} />
+                        </div>
                     </div>
                 </div>
                 <div className="progress w-full  relative">

@@ -17,8 +17,6 @@ const Library = () => {
                 audioFiles.forEach(file => formData.append('file', file));
                 axios.post('/upload', formData)
                     .then(response => {
-                        console.log(response.data)
-                        console.log("Song uploaded successfully!");
                         
                         router.push('/home');
                     })

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../store'
+import axios from '../../../extends/axios';
 
 
 // Define a type for the slice state
@@ -42,6 +43,7 @@ const musicSlice = createSlice({
             state.value.tracks = action.payload;
         },
         setCurrentTrack: (state, action) => {
+            axios.put('/history', { trackId: action.payload._id });
             state.value.currentTrack = action.payload;
         },
     },

@@ -29,13 +29,10 @@ const Home = () => {
     const tracks = useAppSelector(state => state.music.value.tracks);
     const dispatch = useAppDispatch();
     const currentTrack = useAppSelector(state => state.music.value.currentTrack);
-    console.log(currentTrack)
 
     useEffect(() => {
         const getTracks = async () => {
-            console.log(tracks)
             try {
-                console.log(tracks)
                 if (tracks.length > 0) return;
                 const response = await axios.post('/getTracks');
                 dispatch(setTracks(response.data.tracks));
@@ -43,6 +40,15 @@ const Home = () => {
                 console.error('Error fetching tracks:', error);
             }
         }
+        const getLastTrack = async () => {
+            try {
+                const response = await axios.post('/getLastTrack');
+                dispatch(setCurrentTrack(response.data.track.trackId));
+            } catch (error) {
+                console.error('Error fetching last track:', error);
+            }
+        }
+        getLastTrack();
 
         getTracks();
     }, []);
