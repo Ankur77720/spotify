@@ -12,7 +12,7 @@ const Player = () => {
     const tracks = useAppSelector(state => state.music.value.tracks);
     const currentTrack = useAppSelector(state => state.music.value.currentTrack);
     const [isPlaying, setIsPlaying] = useState<boolean>(true);
-    const [isLiked, setIsLiked] = useState<boolean>(false)
+    const [isLiked, setIsLiked] = useState<boolean>(currentTrack ? currentTrack.isLiked : false)
     const audio = useRef<HTMLAudioElement>(null);
     const thumbRef = useRef<HTMLDivElement>(null);
     const progressBarRef = useRef<HTMLDivElement>(null);
@@ -56,16 +56,14 @@ const Player = () => {
     useEffect(() => {
         if (!currentTrack) return;
 
+        navigator.mediaSession.setActionHandler('nexttrack', handleNext);
+        navigator.mediaSession.setActionHandler('previoustrack', handlePrevious);
+        navigator.mediaSession.setActionHandler('play', handlePlayPause);
+        navigator.mediaSession.setActionHandler('pause', handlePlayPause);
 
+        if (currentTrack)
+            setIsLiked(currentTrack.isLiked);
 
-
-        async function checkLike() {
-            const response = await axios.post('/checkLike', { trackId: currentTrack?._id });
-            const data = response.data;
-            setIsLiked(data.isLiked);
-        }
-
-        checkLike();
 
         const audioElement = audio.current as HTMLAudioElement;
         const progressBar = progressBarRef.current as HTMLElement;
@@ -103,10 +101,9 @@ const Player = () => {
         progressBar.style.width = `${trackProgress}%`;
         thumb.style.left = `${trackProgress}%`;
 
+        audioElement.addEventListener('ended', handleNext);
+
     }, [currentTrack]);
-
-
-
 
     const playPauseButton = isPlaying ? (
         <div className="pause" onClick={handlePlayPause}>
@@ -165,8 +162,9 @@ const Player = () => {
                         onChange={handleRangeChange}
                     />
                     <div className="dummy flex justify-start items-center pointer-events-none absolute w-full h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                        <div ref={progressBarRef} className="progressBar w-full h-1 bg-gray-300 rounded-sm"></div>
-                        <div ref={thumbRef} className="thumb h-4 w-4 rounded-full bg-gray-300 absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                        <div ref={progressBarRef} className="progressBar w-full h-1 bg-gray-300 rounded-sm relative z-10"></div>
+                        <div ref={thumbRef} className="thumb h-4 w-4 rounded-full bg-gray-300 absolute left-0 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"></div>
+                        <div className="progressBarRunWay w-full h-1 bg-gray-700 rounded-sm absolute"></div>
                     </div>
                 </div>
             </div>

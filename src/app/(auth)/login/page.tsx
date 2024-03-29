@@ -27,7 +27,6 @@ const Login = () => {
             passwordRef.current && passwordRef.current.classList.add('error')
         }
 
-
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/login`, {
                 username, password
@@ -41,11 +40,6 @@ const Login = () => {
         } catch (err) {
             console.log(err)
         }
-
-
-
-
-
     }
 
 
