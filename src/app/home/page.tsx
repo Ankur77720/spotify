@@ -60,8 +60,6 @@ const Home = () => {
                 <h1 className='font-semibold text-xl' >Hello, Ankur</h1>
             </nav>
 
-            <Artists />
-
             <LastTracks />
 
 

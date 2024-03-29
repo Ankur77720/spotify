@@ -44,7 +44,7 @@ export default function ({ children }: Readonly<{ children: React.ReactNode; }>)
                 {children}
                 <section className="bottom w-full fixed bottom-0 flex flex-col items-center gap-1">
                     <Player />
-                    <nav className="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-bg-primary w-full p-5 px-10 flex justify-between">
+                    <nav className="bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-bg-primary w-full p-5 px-0 grid grid-cols-3">
                         <NaveItem
                             Icon={RemixIcon.RiHome2Fill}
                             forwardOnClick={(event) => {

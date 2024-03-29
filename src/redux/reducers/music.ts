@@ -23,10 +23,12 @@ export interface Track {
 }
 
 export interface Artist {
+    _id: string;
     name: string;
     bio?: string;
     imageUrl?: string;
     genres?: string[];
+    imageReference: File | string;
 }
 
 export interface MusicState {
@@ -82,6 +84,6 @@ const musicSlice = createSlice({
     },
 });
 
-export const { setTracks, setCurrentTrack, setLastTracks,setArtists } = musicSlice.actions;
+export const { setTracks, setCurrentTrack, setLastTracks, setArtists } = musicSlice.actions;
 export const music = (state: RootState) => state.music.value
 export default musicSlice.reducer;

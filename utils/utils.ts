@@ -20,3 +20,13 @@ export const isAuthenticated = async (): Promise<boolean> => {
 };
 
 
+export function throttle(callback: Function, delay: number) {
+    let last: number = 0;
+    return function (...args: any) {
+        const now = new Date().getTime();
+        if (now - last < delay) return;
+        last = now;
+        callback(...args);
+    }
+}
+

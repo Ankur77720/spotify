@@ -35,6 +35,12 @@ html {
 }
 
 
+.artists {
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 1rem;
+  row-gap: 3rem;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

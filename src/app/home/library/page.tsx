@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import axios from '../../../../extends/axios';
 import { useRouter } from 'next/navigation';
 import * as RemixIcon from "@remixicon/react"
+import artists from '@/components/artists';
 
 const Library = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -50,7 +51,7 @@ const Library = () => {
                 <button className='p-3 rounded-md flex gap-3 items-center text-lg border border-bg-highlight px-10' type="submit">Submit</button>
             </form>
             {selectedFiles.length > 0 && (
-                <div  >
+                <div>
                     <h3 className='mt-5' >Selected Files: {selectedFiles.length} Files </h3>
                     <ul className='list-disc' >
                         {selectedFiles.map((file, index) => (
@@ -64,6 +65,9 @@ const Library = () => {
 
 
 };
+
+
+
 
 
 export default Library;
