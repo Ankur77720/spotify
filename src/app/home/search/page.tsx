@@ -25,6 +25,10 @@ const Search = () => {
 
 
     function updateQuery(query: string) {
+        if (query === "") {
+            setSearchResults([]);
+            return;
+        };
         setSearchQuery(query);
         getSearchResults(query);
     }
@@ -34,12 +38,14 @@ const Search = () => {
             <h1 className='text-2xl mb-4' >Search</h1>
             <IconInput bind={updateQuery} />
             <div className="searchResults">
-                {searchResults.map((track, index) => (
-                    <div className="result flex gap-4 p-2 bg-bg-primary-default rounded-md mt-4">
+                {searchResults.reverse().map((track, index) => (
+                    <div onClick={() => {
+                        dispatch(setCurrentTrack(track))
+                    }} className="result flex gap-4 p-2 bg-bg-primary-default rounded-md mt-4">
                         <img className='aspect-square h-20 rounded-md' src={track.poster} alt="" />
                         <div className="text w-full truncate pr-4">
                             <h1 className="truncate title text-xl">{track.title}</h1>
-                            <p className="truncate artist opacity-55">{track.artists.join(', ')}</p>
+                            <p className="truncate artist opacity-55">{track.artists.map(artist => artist.name).join(' , ')}</p>
                         </div>
                     </div>
                 ))}
